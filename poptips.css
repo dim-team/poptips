@@ -1,0 +1,56 @@
+.popTips {
+  font-size: 12px;
+  left: 0;
+  line-height: 180%;
+  margin-top: 5px;
+  position: absolute;
+  width: 200px;
+  z-index: 9999;
+  text-align: center;
+  border-radius: 4px;
+  background-color: #fff;
+  display: none;
+}
+
+.popTips.error {
+  border: 1px solid red;
+  color: red;
+} 
+
+.popTips.success {
+  border: 1px solid green;
+  color: green;
+}
+
+.popTips em { 
+  font-style:normal; 
+  position:absolute; 
+  left: 39px;
+    top: -21px;
+  width:20px; 
+  height:20px; 
+  font-size:40px; 
+  color: red; 
+  overflow:hidden; 
+  display:block; 
+}
+
+.popTips.error em {
+  color: red;
+}
+
+.popTips.success em {
+  color: green;
+}
+
+.popTips span {
+  position: absolute;
+  left: 39px;
+  top: -20px;
+  width: 20px;
+  height: 20px;
+  font-size: 40px;
+  color: #fff;
+  overflow: hidden;
+  display: block;
+}

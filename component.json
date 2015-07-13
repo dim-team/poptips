@@ -1,0 +1,10 @@
+{
+   "name": "poptips",
+   "version": "1.0.0",
+   "description": "poptips module",
+   "main": "poptips.js",
+   "files": [
+     "poptips.handlebars",
+     "poptips.css"
+   ]
+}
