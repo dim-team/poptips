@@ -8,44 +8,75 @@ var PoptipsTpl = __inline('poptips.handlebars');
 
 var Poptips = {
 	init: function (options) {
-		if (!this.status) {
-			this.options = options;
-			this.render();
-		}
-		
+		this.options = options;
+        this.render();
 	},
 	render: function () {
-		var PoptipsObj = $(PoptipsTpl()); 
-		this.PoptipsObj = PoptipsObj;
-		this.options.container.append(PoptipsObj);
-		this.status = 1;
-		this.bindEvents();
+        var _this = this;
+        switch (_this.options.action) {
+            case 'remove': _this.remove();
+                break;
+            case 'show': _this.show();
+                break;
+            default:
+                break;
+        }
 	},
-	bindEvents: function() {
-		$('.tips').on('focus', function() {
-            console.log('focus');
-            this.title = this.t;
-            $('.popTips').fadeOut();//隐藏浮层
-        }).on('blur', function(event) {
-            console.log('blur');
-            event.stopPropagation();
-            //获取div的位置
-            var offset = $(this).offset();
-            var width = $(this).width();
-            var height = $(this).height();
-            //创建弹出浮层，定位在div的位置
-            var $popTips = $('tpl');
-            $popTips.css({
-                'width': width,
-                'height': height,
-                'line-height': height + 'px',
-                'top': offset.top + height,
-                'left': offset.left
-            });
-            $(this).after($popTips)
-            $popTips.fadeIn();
+    fadeOut: function (PoptipsInstance) {
+        var _this = this;
+        if (PoptipsInstance) {
+           PoptipsInstance.fadeOut();
+        } else if (_this.PoptipsObj) {
+            _this.PoptipsObj.fadeOut();
+        }
+    },
+    remove: function (PoptipsInstance) {
+        var _this = this;
+        if (PoptipsInstance) {
+           PoptipsInstance.remove();
+        } else if (_this.PoptipsObj) {
+            _this.PoptipsObj.remove();
+        }
+    },
+    show: function () {
+        var _this = this;
+        var container = this.options.container;
+        var PoptipsObj = $(PoptipsTpl(this.options));
+        this.PoptipsObj = PoptipsObj;
+        container.after(PoptipsObj);
+
+        //获取目标节点的位置
+        var offset = container.offset();
+        var width = container.width();
+        var height = container.height();
+        //创建弹出浮层，定位在目标节点的位置
+        PoptipsObj.css({
+            'width': width,
+            'height': height,
+            'line-height': height + 'px',
+            'top': offset.top + height,
+            'left': offset.left
         });
-	} 
+
+        var emObj = $('em', PoptipsObj);
+        var spanObj = $('span', PoptipsObj);
+        emObj.css({
+            'left': width / 2 - 10
+        });
+        spanObj.css({
+            'left': width / 2 - 10
+        });
+
+        PoptipsObj.show();
+        if (this.options.autoHide) {
+            setTimeout(function () {
+                _this.fadeOut(PoptipsObj);
+            }, 2000);
+            setTimeout(function () {
+                _this.remove(PoptipsObj);
+            }, 3000);
+        }
+    }
 };
 
 module.exports = Poptips;
